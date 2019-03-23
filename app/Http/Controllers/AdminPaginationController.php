@@ -108,6 +108,14 @@ class AdminPaginationController extends Controller {
         return $select_role;
     }
 
+    public function renderFullUrlCell($link) {
+        return "http://block.aq1.co/" . $link->short_url;
+    }
+
+    public function renderQrCodeCell($link) {
+        return '<img src="data:image/png;base64,' . base64_encode(QrCode::format('png')->size(100)->generate("http://block.aq1.co/" . $link->short_url)) . '>';
+    }
+
     public function renderToggleLinkActiveCell($link) {
         // Add "Disable/Enable" action buttons
         $btn_class = 'btn-danger';
@@ -143,6 +151,8 @@ class AdminPaginationController extends Controller {
 
         $admin_links = Link::select(['short_url', 'long_url', 'clicks', 'created_at', 'creator', 'is_disabled']);
         return Datatables::of($admin_links)
+            ->addColumn('full_url', [$this, 'renderFullUrlCell'])
+            ->addColumn('qr_code', [$this, 'renderQrCodeCell'])
             ->addColumn('disable', [$this, 'renderToggleLinkActiveCell'])
             ->addColumn('delete', [$this, 'renderDeleteLinkCell'])
             ->editColumn('clicks', [$this, 'renderClicksCell'])

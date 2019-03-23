@@ -24,7 +24,7 @@
     </div>
     <div class='col-md-10'>
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="home">
+            <div role="tabpanel" class="tab-pane " id="home">
                 <h2>Welcome to your {{env('APP_NAME')}} dashboard!</h2>
                 <p>Use the links on the left hand side to navigate your {{env('APP_NAME')}} dashboard.</p>
             </div>
@@ -46,7 +46,7 @@
             </div>
 
             @if ($role == $admin_role)
-            <div role="tabpanel" class="tab-pane" id="admin">
+            <div role="tabpanel" class="tab-pane active" id="admin">
                 <h3>Links</h3>
                 @include('snippets.link_table', [
                     'table_id' => 'admin_links_table'
